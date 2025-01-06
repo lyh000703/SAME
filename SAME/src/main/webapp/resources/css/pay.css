@@ -1,0 +1,126 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  font-size: 14px;
+}
+.v132_3939 {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 320px;
+  background: rgba(255,255,255,1);
+  opacity: 1;
+  position: relative;
+ 
+}
+.v448_2579 {
+  display: flex;
+  justify-content: center;
+  width: 660px;
+  height: 560px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 50%;
+  margin: 0 auto;
+
+}
+.below {
+  display: flex;
+  width: 509px;
+  height: 72px;
+  opacity: 1;
+  position: absolute;
+  top: 488px;
+  left: 56px;
+}
+.v132_3941 {
+  width: 209px;
+  height: 204px;
+  background: url("../images/v132_3941.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 203px;
+  overflow: hidden;
+}
+.check_icon>img {
+  width: 209px;
+  height: 204px;
+  opacity: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.v132_3943 {
+  width: 99px;
+  height: 65px;
+  background: url("../images/v132_3943.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: 1;
+  position: absolute;
+  top: 74px;
+  left: 65px;
+  overflow: hidden;
+}
+.v132_3944 {
+  width: 39px;
+  height: 1px;
+  background: url("../images/v132_3944.png");
+  opacity: 1;
+  position: absolute;
+  top: 21px;
+  left: 1px;
+  border: 15px solid rgba(255,255,255,1);
+}
+.name {
+  color: #fff;
+}
+.v132_3946 {
+  width: 354px;
+  color: rgba(0,0,0,1);
+  position: absolute;
+  top: 308px;
+  left: 147px;
+  font-family: Inter;
+  font-weight: Regular;
+  font-size: 32px;
+  opacity: 1;
+  text-align: center;
+}
+.below>.v132_3947{
+  width: 50%;
+  height: 100%;
+  background: url("./결제완료 button2.png");
+  position: relative;
+  top: 465px;
+  left: 0px;
+  opacity: 1;
+  text-align: center;
+}
+.below>.v132_3948{
+  width: 50%;
+  height: 100%;
+  background: url("./결제완료 button3.png");
+  position: relative;
+  top: 465px;
+  left: 306px;
+  opacity: 1;
+  text-align: center;
+}
+.name {
+  color: #fff;
+}

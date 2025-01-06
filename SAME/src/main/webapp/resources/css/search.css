@@ -1,0 +1,182 @@
+
+       body {
+    font-family: Arial, sans-serif; /* 기본 글꼴을 Arial로 설정, 대체 글꼴로 sans-serif 사용 */
+    background-color: #f4f4f4; /* 페이지 배경색을 연한 회색으로 설정 */
+    margin: 0; /* 기본 마진 제거 */
+    padding: 20px; /* 페이지 전체에 20px의 패딩 추가 */
+}
+
+.container {
+    max-width: 859px; /* 최대 너비를 1200px로 제한 */
+    margin: auto; /* 수평 중앙 정렬 */
+    background: #fff; /* 배경색을 흰색으로 설정 */
+    padding: 20px; /* 내부 여백을 20px로 설정 */
+    border-radius: 5px; /* 모서리를 둥글게 설정 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 약한 그림자 효과 추가 */
+    display: flex; /* Flexbox 레이아웃 사용 */
+    flex-direction: column; /* 내부 요소를 세로 방향으로 배치 */
+}
+
+h1 {
+    text-align: center; /* 제목을 중앙 정렬 */
+}
+
+/*검색바 시작*/
+.search-bar {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    margin-bottom: 20px; /* 아래쪽 여백을 20px로 설정 */
+}
+
+#search-input {
+    width: 300px; /* 검색 입력창 너비를 300px로 설정 */
+    padding: 10px; /* 내부 여백을 10px로 설정 */
+    border: 1px solid #ccc; /* 경계선 색상과 두께 설정 */
+    border-radius: 5px; /* 모서리를 둥글게 설정 */
+}
+
+#search-btn {
+    padding: 10px; /* 내부 여백을 10px로 설정 */
+    background-color: #FF5C3D; /* 버튼 배경색을 빨간색으로 설정 */
+    color: white; /* 버튼 글자색을 흰색으로 설정 */
+    border: none; /* 경계선 제거 */
+    border-radius: 5px; /* 모서리를 둥글게 설정 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+    margin-left: 10px; /* 왼쪽 여백을 10px로 설정 */
+}
+
+#search-btn:hover {
+    background-color: #e54e3d; /* 마우스 호버 시 버튼 배경색을 어두운 빨간색으로 변경 */
+}
+/*검색바 끝*/
+
+.filters {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    justify-content: flex-start; /* 요소들을 오른쪽 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    margin-bottom: 20px; /* 아래쪽 여백을 20px로 설정 */
+
+}
+.filter-container {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    align-items: center; /* 수직 중앙 정렬 */
+    margin-right: 20px; /* 필터 간의 간격 */
+    position: relative; /* 자식 요소의 절대 위치를 위한 기준 설정 */
+}
+
+select {
+    padding: 10px; /* 내부 여백을 10px로 설정 */
+    border: 1px solid #ccc; /* 경계선 색상과 두께 설정 */
+    border-radius: 5px; /* 모서리를 둥글게 설정 */
+    width: 150px; /* 드롭다운 너비를 고정 */
+    height: 40px; /* 드롭다운 높이를 고정 */
+}
+
+.selected-categories {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    flex-wrap: wrap; /* 내용이 넘칠 경우 줄 바꿈 */
+    margin-left: 10px; /* 필터와 간격을 주기 위해 왼쪽 여백 추가 */
+    height: 40px; /* 드롭다운 높이와 동일하게 설정 */
+    align-items: center; /* 수직 중앙 정렬 */
+    overflow: hidden; /* 높이를 초과하는 내용 숨김 */
+}
+
+.category-box {
+    background-color: #FF5C3D; /* 카테고리 박스 배경색 설정 */
+    color: white;
+    border-radius: 5px; /* 모서리를 둥글게 설정 */
+    padding: 5px 10px; /* 내부 여백을 위아래 5px, 좌우 10px로 설정 */
+    margin: 5px; /* 외부 여백을 5px로 설정 */
+    display: flex; /* Flexbox 레이아웃 사용 */
+    align-items: center; /* 수직 중앙 정렬 */
+}
+
+.remove-btn {
+    background-color: #ff5c3d; /* 제거 버튼 배경색을 빨간색으로 설정 */
+    color: white; /* 버튼 글자색을 흰색으로 설정 */
+    border: none; /* 경계선 제거 */
+    border-radius: 3px; /* 모서리를 둥글게 설정 */
+    padding: 2px 5px; /* 내부 여백을 위아래 2px, 좌우 5px로 설정 */
+    margin-left: 5px; /* 왼쪽 여백을 5px로 설정 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+}
+
+/*프로필 카드*/
+
+.profiles {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    flex-wrap: wrap; /* 내용이 넘칠 경우 줄 바꿈 */
+    justify-content: space-between; /* 요소들 간의 간격을 균등하게 분배 */
+    margin-top: 20px; /* 위쪽 여백을 20px로 설정 */
+    
+}
+
+.profile-card {
+    background: #f9f9f9; /* 프로필 카드 배경색을 연한 회색으로 설정 */
+    border: 1px solid #eee; /* 경계선 색상과 두께 설정 */
+    border-radius: 5px; /* 모서리를 둥글게 설정 */
+    width: 230px; /* 카드 너비를 230px로 설정 */
+    height: 230px;
+    margin-bottom: 50px; /* 아래쪽 여백을 20px로 설정 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    padding: 10px; /* 내부 여백을 10px로 설정 */
+}
+
+.profile-img-container {
+    position: relative; /* 자식 요소의 절대 위치를 위한 기준 설정 */
+}
+.profile-img {
+    width: 230px; /* 이미지 너비를 230px로 설정 */
+    height: 230px; /* 이미지 높이를 230px로 설정 */
+    border-radius: 5px; /* 모서리를 둥글게 설정 */
+    object-fit: cover; /* 이미지 비율을 유지하며 잘라냄 */
+}
+.profile-title { /* 사진위 제목설정*/
+    position: absolute; /* 절대 위치 설정 */
+    bottom: 10px; /* 아래쪽에서 10px 위치 */
+    left: 0; /* 왼쪽 정렬 */
+    right: 0; /* 오른쪽 정렬 */
+    color: white; /* 글자 색상을 흰색으로 설정 */
+    font-size: 16px; /* 글자 크기 설정 */
+    text-align: left; /* 텍스트 중앙 정렬 */
+    
+    padding: 5px; /* 내부 여백 설정 */
+    border-radius: 5px; /* 모서리를 둥글게 설정 */
+    margin-bottom: 24px; /* 아래쪽 여백을 2px로 설정 */
+}
+.profile-category { /*사진위 카테고리 구분*/
+    position: absolute; /* 절대 위치 설정 */
+    bottom: 10px; /* 아래쪽에서 10px 위치 */
+    left: 0; /* 왼쪽 정렬 */
+    right: 0; /* 오른쪽 정렬 */
+    color: white; /* 글자 색상을 노란색으로 설정 */
+    font-size: 10px; /* 글자 크기 설정 */
+    text-align: left; /* 텍스트 중앙 정렬 */
+    
+    padding: 3px; /* 내부 여백 설정 */
+    border-radius: 5px; /* 모서리를 둥글게 설정 */
+}
+
+
+.profile-id {
+    width: 230px; /* 아이디 영역 너비를 230px로 설정 */
+    height: 20px; /* 아이디 영역 높이를 20px로 설정 */
+    margin-top: 10px; /* 위쪽 여백을 10px로 설정 */
+    font-size: 14px; /* 글자 크기 설정 */
+    color: #333; /* 글자 색상 설정 */
+}
+
+.profile-info {
+    font-size: 12px; /* 추가 정보 글자 크기 설정 */
+    color: #777; /* 추가 정보 글자 색상 설정 */
+}
+.profile-info-container {
+    position: absolute; /* 절대 위치 설정 */
+    bottom: 10px; /* 아래쪽에서 10px 위치 */
+    left: 0; /* 왼쪽 정렬 */
+    right: 0; /* 오른쪽 정렬 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+/*프로필카드 끝*/
+

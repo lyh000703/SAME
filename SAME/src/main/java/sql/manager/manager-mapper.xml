@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <!-- 멤버 관련 쿼리 -->
+    <entry key="selectMenteeListCount">SELECT COUNT(*) AS "COUNT" FROM MEMBER WHERE MEMBER_TYPE = 'A' AND IS_QUIT = 'N'</entry>
+
+    <entry key="managerSelectMenteeList">
+        SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, PHONE, MEMBER_SSN, EMAIL, ADDRESS, IS_QUIT, MEMBER_TYPE, ENROLL_DATE
+        FROM MEMBER
+        WHERE MEMBER_TYPE = 'A' AND IS_QUIT = 'N'
+    </entry>
+    
+    <entry key="selectMentorListCount">SELECT COUNT(*) AS "COUNT" FROM MEMBER WHERE MEMBER_TYPE = 'B' AND IS_QUIT = 'N'</entry>
+
+    <entry key="managerSelectMentorList">
+        SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, PHONE, MEMBER_SSN, EMAIL, ADDRESS, IS_QUIT, MEMBER_TYPE, ENROLL_DATE
+        FROM MEMBER
+        WHERE MEMBER_TYPE = 'B' AND IS_QUIT = 'N'
+    </entry>
+
+    <entry key="selectMember">
+        SELECT MEMBER_NO, MEMBER_ID, MEMBER_PWD, MEMBER_NAME, PHONE, MEMBER_SSN, EMAIL, ADDRESS, ENROLL_DATE, MEMBER_TYPE, IS_QUIT
+        FROM MEMBER
+        WHERE MEMBER_NO = ?
+    </entry>
+    
+    <!-- 민원 관련 쿼리 -->
+    <entry key="getComplaintCount">SELECT COUNT(*) FROM COMPLAINT</entry>
+    
+    <entry key="selectComplaintList">
+        SELECT * FROM (
+            SELECT ROWNUM RNUM, A.* FROM (
+                SELECT COMP_NO, MEMBER_NO, BOARD_NO, COMP_TYPE, COMP_CONTENT, COMP_DATE, IS_CONFIRM
+                FROM COMPLAINT ORDER BY COMP_NO DESC
+            ) A WHERE ROWNUM &lt;= ?
+        ) WHERE RNUM &gt;= ?
+    </entry>
+
+    <entry key="selectComplaint">SELECT * FROM COMPLAINT WHERE COMP_NO = ?</entry>
+    
+    <entry key="searchComplaints">
+        SELECT * FROM COMPLAINT
+        WHERE COMP_TYPE LIKE ? OR COMP_CONTENT LIKE ?
+        ORDER BY COMP_NO DESC
+    </entry>
+    
+    <entry key="updateComplaintStatus">UPDATE COMPLAINT SET IS_CONFIRM = ? WHERE COMP_NO = ?</entry>
+
+    <!-- 카테고리 관련 쿼리 -->
+    <entry key="selectAllCategories">
+        SELECT CATEGORY_NAME, CATEGORY_TYPE
+        FROM CATEGORY
+        ORDER BY CATEGORY_TYPE, CATEGORY_NAME
+    </entry>
+    
+    <entry key="selectAllTypes">
+        SELECT DISTINCT CATEGORY_TYPE 
+        FROM CATEGORY 
+        WHERE CATEGORY_TYPE IS NOT NULL
+        ORDER BY CATEGORY_TYPE
+    </entry>
+    
+    <entry key="insertCategory">INSERT INTO CATEGORY (CATEGORY_NAME, CATEGORY_TYPE) VALUES (?, ?)</entry>
+    
+    <entry key="deleteCategory">DELETE FROM CATEGORY WHERE CATEGORY_NAME = ? AND CATEGORY_TYPE = ?</entry>
+
+    <entry key="insertAttachment">
+        INSERT INTO ATTACHMENT (
+            FILE_NO,
+            REF_NO,
+            ORIGIN_NAME,
+            CHANGED_NAME,
+            FILE_PATH,
+            UPLOAD_DATE,
+            IS_DELETE,
+            AT_TYPE
+        ) VALUES (
+            SEQ_FILE_NO.NEXTVAL,
+            ?,
+            ?,
+            ?,
+            ?,
+            SYSDATE,
+            'N',
+            ?
+        )
+    </entry>
+
+    <entry key="selectLastBoardNo">
+        SELECT MAX(BOARD_NO) FROM BOARD
+    </entry>
+</properties>

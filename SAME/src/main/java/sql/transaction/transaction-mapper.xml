@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<!-- 결제내역 생성  -->
+    <entry key="insertTransaction">
+        INSERT INTO TRANSACTION_DETAIL (
+            TD_NO,
+		    ENROLL_NO,
+		    CLASS_CODE,
+		    MENTOR_NO,
+		    MENTEE_NO,
+		    CATEGORY_NAME,
+		    TD_DATE,
+		    METHOD,
+		    AMOUNT,
+		    STATUS,
+		    IS_ACCEPT
+        ) VALUES (
+            SEQ_TNO.NEXTVAL, ?, ?, ?, ?, ?, SYSDATE, ?, ?, '미처리', DEFAULT)
+        )
+    </entry>
+    
+    <!-- 멘토명 검색, 미완  -->
+    <entry key="selectMentor">
+        SELECT 
+            M.MEMBER_ID,
+            M.MEMBER_NAME,
+            M.HOURLY_RATE,
+            M.PROFILE_IMAGE,
+            M.CATEGORY
+        FROM 
+            MEMBER M
+        WHERE 
+            M.MEMBER_NO = ?
+            AND SUBSTR(M.MEMBER_NO,1,1) = 'B'
+    </entry>
+    
+    
+    <!-- 멘토/멘티별 거래목록 전체조회  -->
+    <entry key="selectTransactionList">
+        SELECT 
+            T.*,
+            M1.MEMBER_NAME AS "MENTOR_NAME",
+            M2.MEMBER_NAME AS "MENTEE_NAME"
+        FROM 
+            TRANSACTION_DETAIL T
+            JOIN MEMBER M1 ON T.MENTOR_NO = M1.MEMBER_NO
+            JOIN MEMBER M2 ON T.MENTEE_NO = M2.MEMBER_NO
+        WHERE 
+            T.MENTOR_NO = ?
+        OR  T.MENTEE_NO = ?
+        ORDER BY 
+            T.TD_DATE DESC
+    </entry>
+    
+    
+    
+    <!-- 거래번호로 조회  -->
+    <entry key="selectTransaction">
+        SELECT 
+            T.*,
+            M1.NAME AS MENTOR_NAME,
+            M2.NAME AS MENTEE_NAME
+        FROM 
+            TRANSACTION_DETAIL T
+            JOIN MEMBER M1 ON T.MENTOR_ID = M1.MEMBER_NO
+            JOIN MEMBER M2 ON T.MENTEE_ID = M2.MEMBER_NO
+        WHERE 
+            T.TD_NO = ?
+    </entry>
+    
+    <!-- 수정날짜 변경 -->
+    <entry key="updateStatus">
+        UPDATE TRANSACTION_DETAIL 
+        SET 
+            STATUS = ?,
+            UPDATED_AT = SYSDATE
+        WHERE 
+            TD_NO = ?
+    </entry>
+    
+    <!-- 정산상태 변경 -->
+    <entry key="updatePaymentStatus">
+        UPDATE TRANSACTION_DETAIL 
+        SET 
+            PAYMENT_STATUS = ?,
+            UPDATED_AT = SYSDATE
+        WHERE 
+            TD_NO = ?
+    </entry>
+    
+    <entry key="selectAvailableTimes">
+        SELECT 
+            AVAILABLE_TIME 
+        FROM 
+            MENTOR_SCHEDULE 
+        WHERE 
+            MENTOR_ID = ? 
+            AND SCHEDULE_DATE = ?
+            AND NOT EXISTS (
+                SELECT 1 
+                FROM TRANSACTION_DETAIL
+                WHERE MENTOR_ID = MENTOR_SCHEDULE.MENTOR_ID
+                AND MENTORING_DATE = SCHEDULE_DATE
+                AND START_TIME = AVAILABLE_TIME
+                AND STATUS NOT IN ('CANCELLED', 'REJECTED')
+            )
+    </entry>
+</properties> 

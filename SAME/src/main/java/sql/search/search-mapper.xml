@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<!-- 프로필 전체 조회 -->
+	<entry key="profileList">
+	
+	SELECT P.*
+	FROM (SELECT MEMBER_NAME, PROFILE_TITLE, INTRODUCTION, CASE SUBSTR(MEMBER_SSN,8,1) WHEN '1' THEN '남성'
+													 WHEN '3' THEN '남성'
+													 ELSE '여성'
+													 END AS GENDER
+			FROM PROFILE
+	JOIN MEMBER USING (MEMBER_NO)) P
+	
+	</entry>
+	
+	<!-- 프로필 키워드 검색 조회  -->
+	<entry key="searchProfileList">
+	
+	SELECT P.*
+	FROM (SELECT MEMBER_NAME, PROFILE_TITLE, INTRODUCTION, CASE SUBSTR(MEMBER_SSN,8,1) WHEN '1' THEN '남성'
+													 WHEN '3' THEN '남성'
+													 ELSE '여성'
+													 END AS GENDER
+			FROM PROFILE
+	JOIN MEMBER USING (MEMBER_NO)) P
+	WHERE MEMBER_NAME LIKE '%' || ? || '%'
+	   OR PROFILE_TITLE LIKE '%' || ? || '%'
+	   OR GENDER LIKE '%' || ? || '%'
+	</entry>
+
+	<!-- 게시글 전체 조회 -->
+    <entry key="searchAll">
+        SELECT *
+        FROM (
+            SELECT
+                BOARD_NO,
+                BOARD_TITLE AS TITLE,
+                BOARD_CONTENT AS CONTENT,
+                BOARD_TYPE AS TYPE,
+                CONCAT('/board/detail?no=', BOARD_NO) AS URL,
+                CREATE_DATE,
+                COUNT AS VIEW_COUNT
+            FROM BOARD
+            WHERE IS_DELETE = 'N'
+            AND (BOARD_TITLE LIKE ? OR BOARD_CONTENT LIKE ?)
+<!--             UNION ALL
+            SELECT 
+                MEMBER_NO AS ID,
+                MEMBER_NAME AS TITLE,
+                DESCRIPTION AS CONTENT,
+                'mentor' AS TYPE,
+                CONCAT('/mentor/detail?no=', MENTOR_NO) AS URL,
+                CREATE_DATE,
+                VIEW_COUNT
+            FROM MENTOR
+            WHERE IS_DELETE = 'N'
+            AND (MENTOR_NAME LIKE ? OR DESCRIPTION LIKE ?)
+        ) SEARCH_RESULTS --> )
+        ORDER BY CREATE_DATE DESC
+    </entry>
+</properties> 

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="login">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_ID = ?
+		  AND MEMBER_PWD = ?
+		  AND IS_QUIT = 'N'
+	</entry>
+<entry key="forgotId">
+	SELECT *
+	FROM MEMBER
+	WHERE MEMBER_NAME = ?
+	  AND EMAIL = ?
+	  AND MEMBER_NO LIKE ?
+</entry>
+<entry key="forgotPass">
+    SELECT MEMBER_ID, MEMBER_NAME, EMAIL
+    FROM MEMBER
+    WHERE MEMBER_ID = ? 
+      AND MEMBER_NAME = ? 
+      AND EMAIL = ?
+</entry>
+<entry key="updatePassword">
+    UPDATE MEMBER
+    SET MEMBER_PWD = ?
+    WHERE MEMBER_ID = ?
+</entry>
+<entry key="quitMember">
+	UPDATE MEMBER
+	   SET IS_QUIT = 'Y'
+	 WHERE MEMBER_ID = ?
+</entry>
+<entry key="myPageModify">
+    UPDATE MEMBER
+    SET 
+        MEMBER_PWD = ?,
+        PHONE = ?,
+        EMAIL = ?,
+        ADDRESS = ?
+    WHERE MEMBER_ID = ?
+    AND IS_QUIT = 'N'
+</entry>
+<entry key="myPage">
+	SELECT *
+    FROM MEMBER
+</entry>
+<entry key="getMemberInfo">
+    SELECT *
+    FROM MEMBER
+    WHERE MEMBER_ID = ?
+    AND IS_QUIT = 'N'
+</entry>
+<entry key="Transaction">
+    SELECT 
+        td.TD_NO,
+        td.ENROLL_NO,
+        td.CLASS_CODE,
+        td.MENTOR_NO,
+        td.MENTEE_NO,
+        td.CATEGORY_NAME,
+        td.TD_DATE,
+        td.METHOD,
+        td.AMOUNT,
+        td.STATUS,
+        cm.CLASS_NAME,
+        m.MEMBER_NAME,
+        cm.START_DATE,
+        cm.END_DATE
+    FROM TRANSACTION_DETAIL td
+    JOIN CLASS_MENTEE cm ON td.CLASS_CODE = cm.CLASS_CODE
+    JOIN MEMBER m ON td.MENTEE_NO = m.MEMBER_NO
+    WHERE td.MENTOR_NO = ?
+    AND (? IS NULL OR td.TD_DATE BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD'))
+    AND (? = 'all' OR td.STATUS = ?)
+    AND (? IS NULL OR m.MEMBER_NAME LIKE ?)
+    ORDER BY td.TD_DATE DESC
+</entry>
+
+<entry key="selectCategoryByType">
+    SELECT CATEGORY_NAME
+    FROM CATEGORY
+    WHERE CATEGORY_TYPE = ?
+    ORDER BY CATEGORY_NAME
+</entry>
+<!-- CLASS_CODE 중복 체크-->
+<entry key="checkClassCode">
+    SELECT COUNT(*) 
+    FROM CLASS 
+    WHERE CLASS_CODE = ?
+</entry>
+<entry key="insertClass">
+    INSERT INTO CLASS (
+        CLASS_CODE,
+        MENTOR_NO,
+        CLASS_TITLE,
+        CATEGORY,
+        REGION,
+        START_DATE,
+        END_DATE,
+        CLASS_DETAIL,
+        AMOUNT,
+        STATUS
+    ) VALUES (
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        TO_DATE(?, 'YYYY-MM-DD'),
+        TO_DATE(?, 'YYYY-MM-DD'),
+        ?,
+        ?,
+        ?
+    )
+</entry>
+<entry key="selectClassInfo">
+    SELECT 
+        CLASS_TITLE, 
+        CATEGORY, 
+        REGION, 
+        TO_CHAR(START_DATE, 'YYYY.MM.DD') AS START_DATE, 
+        TO_CHAR(END_DATE, 'YYYY.MM.DD') AS END_DATE
+    FROM CLASS
+    WHERE MENTOR_NO = ?
+    AND STATUS = 'Y'
+    ORDER BY START_DATE DESC
+</entry>
+<entry key="insert"> INSERT INTO MEMBER
+    VALUES (
+        CASE
+            WHEN ? = 'B' THEN CONCAT('B', LPAD(SEQ_MENTOR_NO.NEXTVAL, 5, '0'))
+            ELSE CONCAT('A', LPAD(SEQ_MENTEE_NO.NEXTVAL, 5, '0'))
+        END,
+        ?, -- member_id
+        ?, -- MEMBER_PWD
+        ?, -- MEMBER_NAME
+        ?, -- MEMBER_PHONE
+        ?, -- MEMBER_SSN
+        ?, -- MEMBER_EMAIL
+        DEFAULT, -- MEMBER_DATE
+        DEFAULT, -- MEMBER_STATUS
+        ?, -- MEMBER_ADDRESS
+        ?, -- MEMBER_TYPE
+        SYSDATE
+    )
+    </entry>
+<entry key="insertResume">
+    INSERT INTO RESUME (RESUME_NO, MEMBER_NO) 
+    SELECT SEQ_RESUME_NO.NEXTVAL, MEMBER_NO 
+    FROM MEMBER 
+    WHERE MEMBER_ID = ?
+</entry>
+
+<entry key="delete">
+		UPDATE MEMBER
+			SET IS_QUIT = 'Y'
+		WHERE MEMBER_NO = ? AND MEMBER_PWD = ?
+	</entry>
+
+<entry key="selectMentorResume">
+    SELECT 
+        m.MEMBER_NO,
+        m.MEMBER_NAME,
+        rr.REGION_NAME,
+        rc.CLASS_NAME,
+        re.EDUCATION,
+        rca.CAREER,
+        rl.LICENSE
+    FROM MEMBER m
+    LEFT JOIN RESUME r ON m.MEMBER_NO = r.MEMBER_NO
+    LEFT JOIN RESUME_REGION rr ON r.RESUME_NO = rr.RESUME_NO
+    LEFT JOIN RESUME_CLASS rc ON r.RESUME_NO = rc.RESUME_NO
+    LEFT JOIN RESUME_EDUCATION re ON r.RESUME_NO = re.RESUME_NO
+    LEFT JOIN RESUME_CAREER rca ON r.RESUME_NO = rca.RESUME_NO
+    LEFT JOIN RESUME_LICENSE rl ON r.RESUME_NO = rl.RESUME_NO
+    WHERE m.MEMBER_NO = ?
+</entry>
+
+<entry key="updateMentorResume">
+    UPDATE RESUME_REGION 
+    SET REGION_NAME = ?
+    WHERE RESUME_NO = (SELECT RESUME_NO FROM RESUME WHERE MEMBER_NO = ?);
+    
+    UPDATE RESUME_CLASS 
+    SET CLASS_NAME = ?
+    WHERE RESUME_NO = (SELECT RESUME_NO FROM RESUME WHERE MEMBER_NO = ?);
+    
+    UPDATE RESUME_EDUCATION 
+    SET EDUCATION = ?
+    WHERE RESUME_NO = (SELECT RESUME_NO FROM RESUME WHERE MEMBER_NO = ?);
+    
+    UPDATE RESUME_CAREER 
+    SET CAREER = ?
+    WHERE RESUME_NO = (SELECT RESUME_NO FROM RESUME WHERE MEMBER_NO = ?);
+    
+    UPDATE RESUME_LICENSE 
+    SET LICENSE = ?
+    WHERE RESUME_NO = (SELECT RESUME_NO FROM RESUME WHERE MEMBER_NO = ?);
+</entry>
+</properties>
